@@ -1,0 +1,83 @@
+def select_op(choice):
+    if choice == '#':
+        return -1
+    elif choice == '$':
+        return 0
+    
+    operations = {
+        '+': lambda a, b: a + b,
+        '-': lambda a, b: a - b,
+        '*': lambda a, b: a * b,
+        '/': lambda a, b: a / b if b != 0 else None,
+        '^': lambda a, b: a ** b,
+        '%': lambda a, b: a % b if b != 0 else None
+    }
+    
+    if choice not in operations:
+        print("Unrecognized operation")
+        return None
+    
+    # Get first number
+    while True:
+        first_input = input("Enter first number: ").strip()
+        if first_input == '$':
+            print("Resetting calculator...")
+            return 0
+        try:
+            num1 = float(first_input)
+            break
+        except ValueError:
+            print("Not a valid number,please enter again")
+    
+    # Get second number
+    while True:
+        second_input = input("Enter second number: ").strip()
+        if second_input == '$':
+            print("Resetting calculator...")
+            return 0
+        try:
+            num2 = float(second_input)
+            break
+        except ValueError:
+            print("Not a valid number,please enter again")
+    
+    # Perform calculation
+    try:
+        result = operations[choice](num1, num2)
+        if result is None:  # Division by zero case
+            print("Something Went Wrong")
+        else:
+            print(f"{num1} {choice} {num2} = {result}")
+        return result
+    except Exception as e:
+        print("Something Went Wrong")
+        return None
+
+def main():
+    while True:
+        print("Select operation.")
+        print("1.Add      : + ")
+        print("2.Subtract : - ")
+        print("3.Multiply : * ")
+        print("4.Divide   : / ")
+        print("5.Power    : ^ ")
+        print("6.Remainder: % ")
+        print("7.Terminate: # ")
+        print("8.Reset    : $ ")
+        
+        choice = input("Enter choice(+,-,*,/,^,%,#,$): ").strip()
+        
+        if choice == '#':
+            print("Done. Terminating")
+            break
+        
+        result = select_op(choice)
+        
+        if result == -1:  # Terminate from within select_op
+            print("Done. Terminating")
+            break
+        elif result == 0:  # Reset
+            continue
+
+if name == "main":
+    main()
